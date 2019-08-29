@@ -1,77 +1,20 @@
 {
-  "name": "angular-froala-wysiwyg-base",
-  "version": "3.0.5",
-  "description": "Angular 2, 4, 5, 6, 7 and 8 bindings for Froala WYSIWYG HTML rich text editor",
+  "name": "angular-froala-wysiwyg",
+  "version": "3.0.4",
+  "peerDependencies": {
+    "froala-editor": "3.0.4"
+  },
   "main": "bundles/angular-froala-wysiwyg.umd.js",
-  "typings": "index.d.ts",
-  "module": "index.js",
-  "scripts": {
-    "lite-server": "lite-server -c demo/bs-config.json",
-    "demo.serve": "npm run -s build link demo.build lite-server",
-    "demo.build": "ng build --aot=false",
-    "build": "ng build angular-froala-wysiwyg",
-    "start": "ng serve --aot=false --host 0.0.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/froala/angular-froala-wysiwyg.git"
-  },
-  "keywords": [
-    "angular2",
-    "angular4",
-    "angular5",
-    "angular6",
-    "angular7",
-    "ng2",
-    "ng4",
-    "ng5",
-    "ng6",
-    "ng7",
-    "froala",
-    "html",
-    "text",
-    "editor",
-    "wysiwyg",
-    "rich editor",
-    "rich text editor",
-    "rte",
-    "javascript"
-  ],
-  "author": "Froala Labs (https://www.froala.com/)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/froala/angular-froala-wysiwyg/issues"
-  },
+  "module": "fesm5/angular-froala-wysiwyg.js",
+  "es2015": "fesm2015/angular-froala-wysiwyg.js",
+  "esm5": "esm5/angular-froala-wysiwyg.js",
+  "esm2015": "esm2015/angular-froala-wysiwyg.js",
+  "fesm5": "fesm5/angular-froala-wysiwyg.js",
+  "fesm2015": "fesm2015/angular-froala-wysiwyg.js",
+  "typings": "angular-froala-wysiwyg.d.ts",
+  "metadata": "angular-froala-wysiwyg.metadata.json",
+  "sideEffects": false,
   "dependencies": {
-    "font-awesome": "^4.7.0",
-    "froala-editor": "^3.0.5",
     "tslib": "^1.9.0"
-  },
-  "peerDependencies": {},
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^0.802.0",
-    "@angular-devkit/build-ng-packagr": "^0.802.0",
-    "@angular/cli": "^8.2.0",
-    "@angular/common": "^8.2.0",
-    "@angular/compiler": "^8.2.0",
-    "@angular/compiler-cli": "^8.2.0",
-    "@angular/core": "^8.2.0",
-    "@angular/forms": "^8.2.0",
-    "@angular/language-service": "^8.2.0",
-    "@angular/platform-browser": "^8.2.0",
-    "@angular/platform-browser-dynamic": "^8.2.0",
-    "@angular/router": "^8.2.0",
-    "@types/marked": "0.0.28",
-    "@types/node": "7.0.0",
-    "@types/tapable": "^0.2.5",
-    "@types/webpack": "^2.2.2",
-    "classlist-polyfill": "1.0.3",
-    "core-js": "^2.6.9",
-    "ng-packagr": "^5.4.3",
-    "rxjs": "^6.3.3",
-    "ts-helpers": "^1.1.1",
-    "tsickle": "^0.36.0",
-    "typescript": "3.5.3",
-    "zone.js": "^0.9.1"
   }
 }
