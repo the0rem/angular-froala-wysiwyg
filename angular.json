@@ -4,6 +4,19 @@
   "newProjectRoot": "projects",
   "projects": {
     "angular-froala-wysiwyg": {
+      "root": "src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "project": "src/ng-package.json",
+            "tsConfig": "src/tsconfig.es5.json"
+          }
+        }
+      }
+    },
+    "angular-froala-wysiwyg-demo": {
       "root": "demo",
       "sourceRoot": "demo/src",
       "projectType": "application",
@@ -60,13 +73,13 @@
         }
       }
     },
-    "angular-froala-wysiwyg-e2e": {
+    "angular-froala-wysiwyg-demo-e2e": {
       "root": "demo/e2e",
       "sourceRoot": "demo/e2e",
       "projectType": "application"
     }
   },
-  "defaultProject": "angular-froala-wysiwyg",
+  "defaultProject": "angular-froala-wysiwyg-demo",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "",
