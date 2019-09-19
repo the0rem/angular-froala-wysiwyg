@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/forms'), require('froala-editor')) :
-    typeof define === 'function' && define.amd ? define('angular-froala-wysiwyg', ['exports', '@angular/core', '@angular/forms', 'froala-editor'], factory) :
-    (global = global || self, factory(global['angular-froala-wysiwyg'] = {}, global.ng.core, global.ng.forms, global.FroalaEditor));
-}(this, function (exports, core, forms, FroalaEditor) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/core'), require('froala-editor')) :
+    typeof define === 'function' && define.amd ? define('angular-froala-wysiwyg', ['exports', '@angular/forms', '@angular/core', 'froala-editor'], factory) :
+    (global = global || self, factory(global['angular-froala-wysiwyg'] = {}, global.ng.forms, global.ng.core, global.FroalaEditor));
+}(this, function (exports, forms, core, FroalaEditor) { 'use strict';
 
     FroalaEditor = FroalaEditor && FroalaEditor.hasOwnProperty('default') ? FroalaEditor['default'] : FroalaEditor;
 
@@ -23,16 +23,19 @@
             this._hasSpecialTag = false;
             this._editorInitialized = false;
             this._oldModel = null;
+            this.initializeOverridden = false;
             // Begin ControlValueAccesor methods.
             this.onChange = (/**
              * @param {?} _
              * @return {?}
              */
-            function (_) { });
+            function (_) {
+            });
             this.onTouched = (/**
              * @return {?}
              */
-            function () { });
+            function () {
+            });
             // froalaModel directive as output: update model if editor contentChanged
             this.froalaModelChange = new core.EventEmitter();
             // froalaInit directive as output: send manual editor initialization
@@ -69,7 +72,9 @@
          * @param {?} fn
          * @return {?}
          */
-        function (fn) { this.onChange = fn; };
+        function (fn) {
+            this.onChange = fn;
+        };
         /**
          * @param {?} fn
          * @return {?}
@@ -78,7 +83,9 @@
          * @param {?} fn
          * @return {?}
          */
-        function (fn) { this.onTouched = fn; };
+        function (fn) {
+            this.onTouched = fn;
+        };
         Object.defineProperty(FroalaEditorDirective.prototype, "froalaEditor", {
             // End ControlValueAccesor methods.
             // froalaEditor directive as input: store the editor options
@@ -172,17 +179,20 @@
                 var modelContent = null;
                 if (_this._hasSpecialTag) {
                     /** @type {?} */
-                    var attributeNodes = _this._element.attributes;
-                    /** @type {?} */
-                    var attrs = {};
-                    for (var i = 0; i < attributeNodes.length; i++) {
-                        /** @type {?} */
-                        var attrName = attributeNodes[i].name;
-                        if (_this._opts.angularIgnoreAttrs && _this._opts.angularIgnoreAttrs.indexOf(attrName) != -1) {
-                            continue;
+                    var attrs = _this._element.attributes.reduce((/**
+                     * @param {?} result
+                     * @param {?} attr
+                     * @return {?}
+                     */
+                    function (result, attr) {
+                        var _a;
+                        if (_this._opts.angularIgnoreAttrs && _this._opts.angularIgnoreAttrs.indexOf(attr.name) !== -1) {
+                            return result;
                         }
-                        attrs[attrName] = attributeNodes[i].value;
-                    }
+                        return Object.assign(result, (_a = {},
+                            _a[attr.name] = attr.value,
+                            _a));
+                    }), {});
                     if (_this._element.innerHTML) {
                         attrs[_this.INNER_HTML_ATTR] = _this._element.innerHTML;
                     }
@@ -304,7 +314,7 @@
                 /** @type {?} */
                 var existingInitCallback = _this._opts.events.initialized;
                 // Default initialized event.
-                if (!_this._opts.events.initialized || !_this._opts.events.initialized.overridden) {
+                if (!_this._opts.events.initialized || !_this.initializeOverridden) {
                     _this._opts.events.initialized = (/**
                      * @return {?}
                      */
@@ -312,7 +322,7 @@
                         _this.initListeners();
                         existingInitCallback && existingInitCallback.call(_this._editor, _this);
                     });
-                    _this._opts.events.initialized.overridden = true;
+                    _this.initializeOverridden = true;
                 }
                 // Initialize the Froala Editor.
                 _this._editor = new FroalaEditor(_this._element, _this._opts);
@@ -456,17 +466,30 @@
         function () {
             this.destroyEditor();
         };
+        /**
+         * @param {?} isDisabled
+         * @return {?}
+         */
+        FroalaEditorDirective.prototype.setDisabledState = /**
+         * @param {?} isDisabled
+         * @return {?}
+         */
+        function (isDisabled) {
+        };
         FroalaEditorDirective.decorators = [
             { type: core.Directive, args: [{
                         selector: '[froalaEditor]',
                         exportAs: 'froalaEditor',
-                        providers: [{
-                                provide: forms.NG_VALUE_ACCESSOR, useExisting: core.forwardRef((/**
+                        providers: [
+                            {
+                                provide: forms.NG_VALUE_ACCESSOR,
+                                useExisting: core.forwardRef((/**
                                  * @return {?}
                                  */
                                 function () { return FroalaEditorDirective; })),
                                 multi: true
-                            }]
+                            }
+                        ]
                     },] }
         ];
         /** @nocollapse */
@@ -528,6 +551,11 @@
          * @private
          */
         FroalaEditorDirective.prototype._oldModel;
+        /**
+         * @type {?}
+         * @private
+         */
+        FroalaEditorDirective.prototype.initializeOverridden;
         /** @type {?} */
         FroalaEditorDirective.prototype.onChange;
         /** @type {?} */
@@ -603,7 +631,7 @@
          * @return {?}
          */
         function () {
-            this.renderer.setElementClass(this._element, "fr-view", true);
+            this.renderer.addClass(this._element, "fr-view");
         };
         FroalaViewDirective.decorators = [
             { type: core.Directive, args: [{
@@ -612,7 +640,7 @@
         ];
         /** @nocollapse */
         FroalaViewDirective.ctorParameters = function () { return [
-            { type: core.Renderer },
+            { type: core.Renderer2 },
             { type: core.ElementRef }
         ]; };
         FroalaViewDirective.propDecorators = {

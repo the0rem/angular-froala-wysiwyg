@@ -1,5 +1,5 @@
-import { EventEmitter, Directive, forwardRef, ElementRef, NgZone, Input, Output, NgModule, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { EventEmitter, Directive, forwardRef, ElementRef, NgZone, Input, Output, NgModule, Renderer2 } from '@angular/core';
 import FroalaEditor from 'froala-editor';
 
 /**
@@ -19,16 +19,19 @@ var FroalaEditorDirective = /** @class */ (function () {
         this._hasSpecialTag = false;
         this._editorInitialized = false;
         this._oldModel = null;
+        this.initializeOverridden = false;
         // Begin ControlValueAccesor methods.
         this.onChange = (/**
          * @param {?} _
          * @return {?}
          */
-        function (_) { });
+        function (_) {
+        });
         this.onTouched = (/**
          * @return {?}
          */
-        function () { });
+        function () {
+        });
         // froalaModel directive as output: update model if editor contentChanged
         this.froalaModelChange = new EventEmitter();
         // froalaInit directive as output: send manual editor initialization
@@ -65,7 +68,9 @@ var FroalaEditorDirective = /** @class */ (function () {
      * @param {?} fn
      * @return {?}
      */
-    function (fn) { this.onChange = fn; };
+    function (fn) {
+        this.onChange = fn;
+    };
     /**
      * @param {?} fn
      * @return {?}
@@ -74,7 +79,9 @@ var FroalaEditorDirective = /** @class */ (function () {
      * @param {?} fn
      * @return {?}
      */
-    function (fn) { this.onTouched = fn; };
+    function (fn) {
+        this.onTouched = fn;
+    };
     Object.defineProperty(FroalaEditorDirective.prototype, "froalaEditor", {
         // End ControlValueAccesor methods.
         // froalaEditor directive as input: store the editor options
@@ -168,17 +175,20 @@ var FroalaEditorDirective = /** @class */ (function () {
             var modelContent = null;
             if (_this._hasSpecialTag) {
                 /** @type {?} */
-                var attributeNodes = _this._element.attributes;
-                /** @type {?} */
-                var attrs = {};
-                for (var i = 0; i < attributeNodes.length; i++) {
-                    /** @type {?} */
-                    var attrName = attributeNodes[i].name;
-                    if (_this._opts.angularIgnoreAttrs && _this._opts.angularIgnoreAttrs.indexOf(attrName) != -1) {
-                        continue;
+                var attrs = _this._element.attributes.reduce((/**
+                 * @param {?} result
+                 * @param {?} attr
+                 * @return {?}
+                 */
+                function (result, attr) {
+                    var _a;
+                    if (_this._opts.angularIgnoreAttrs && _this._opts.angularIgnoreAttrs.indexOf(attr.name) !== -1) {
+                        return result;
                     }
-                    attrs[attrName] = attributeNodes[i].value;
-                }
+                    return Object.assign(result, (_a = {},
+                        _a[attr.name] = attr.value,
+                        _a));
+                }), {});
                 if (_this._element.innerHTML) {
                     attrs[_this.INNER_HTML_ATTR] = _this._element.innerHTML;
                 }
@@ -300,7 +310,7 @@ var FroalaEditorDirective = /** @class */ (function () {
             /** @type {?} */
             var existingInitCallback = _this._opts.events.initialized;
             // Default initialized event.
-            if (!_this._opts.events.initialized || !_this._opts.events.initialized.overridden) {
+            if (!_this._opts.events.initialized || !_this.initializeOverridden) {
                 _this._opts.events.initialized = (/**
                  * @return {?}
                  */
@@ -308,7 +318,7 @@ var FroalaEditorDirective = /** @class */ (function () {
                     _this.initListeners();
                     existingInitCallback && existingInitCallback.call(_this._editor, _this);
                 });
-                _this._opts.events.initialized.overridden = true;
+                _this.initializeOverridden = true;
             }
             // Initialize the Froala Editor.
             _this._editor = new FroalaEditor(_this._element, _this._opts);
@@ -452,17 +462,30 @@ var FroalaEditorDirective = /** @class */ (function () {
     function () {
         this.destroyEditor();
     };
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    FroalaEditorDirective.prototype.setDisabledState = /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    function (isDisabled) {
+    };
     FroalaEditorDirective.decorators = [
         { type: Directive, args: [{
                     selector: '[froalaEditor]',
                     exportAs: 'froalaEditor',
-                    providers: [{
-                            provide: NG_VALUE_ACCESSOR, useExisting: forwardRef((/**
+                    providers: [
+                        {
+                            provide: NG_VALUE_ACCESSOR,
+                            useExisting: forwardRef((/**
                              * @return {?}
                              */
                             function () { return FroalaEditorDirective; })),
                             multi: true
-                        }]
+                        }
+                    ]
                 },] }
     ];
     /** @nocollapse */
@@ -524,6 +547,11 @@ if (false) {
      * @private
      */
     FroalaEditorDirective.prototype._oldModel;
+    /**
+     * @type {?}
+     * @private
+     */
+    FroalaEditorDirective.prototype.initializeOverridden;
     /** @type {?} */
     FroalaEditorDirective.prototype.onChange;
     /** @type {?} */
@@ -599,7 +627,7 @@ var FroalaViewDirective = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this.renderer.setElementClass(this._element, "fr-view", true);
+        this.renderer.addClass(this._element, "fr-view");
     };
     FroalaViewDirective.decorators = [
         { type: Directive, args: [{
@@ -608,7 +636,7 @@ var FroalaViewDirective = /** @class */ (function () {
     ];
     /** @nocollapse */
     FroalaViewDirective.ctorParameters = function () { return [
-        { type: Renderer },
+        { type: Renderer2 },
         { type: ElementRef }
     ]; };
     FroalaViewDirective.propDecorators = {
@@ -687,6 +715,11 @@ var FERootModule = /** @class */ (function () {
     ];
     return FERootModule;
 }());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 
 /**
  * @fileoverview added by tsickle

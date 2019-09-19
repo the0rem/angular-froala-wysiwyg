@@ -1,8 +1,8 @@
 {
   "name": "angular-froala-wysiwyg",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "peerDependencies": {
-    "froala-editor": "3.0.4"
+    "froala-editor": "3.0.5"
   },
   "main": "bundles/angular-froala-wysiwyg.umd.js",
   "module": "fesm5/angular-froala-wysiwyg.js",
