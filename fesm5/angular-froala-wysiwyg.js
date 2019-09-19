@@ -596,11 +596,6 @@ var FroalaEditorModule = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var FroalaViewDirective = /** @class */ (function () {
     function FroalaViewDirective(renderer, element) {
         this.renderer = renderer;
@@ -686,11 +681,6 @@ var FroalaViewModule = /** @class */ (function () {
     ];
     return FroalaViewModule;
 }());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 
 /**
  * @fileoverview added by tsickle
